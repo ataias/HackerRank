@@ -24,21 +24,21 @@ func minimumSwaps(arr: [Int]) -> Int {
     edges.removeAll { $0.fromIndex == $0.toIndex }
 
     // We assume there are cycles in the solution; we need to find them
-    var cycles: [[Edge]] = []
+    var cycleCounts: [Int] = []
     while edges.count > 0 {
-        var cycle: [Edge] = []
+        var cycle = 0
         var edge = edges.popLast()!
-        cycle.append(edge)
+        cycle += 1
 
         while let nextEdgeIndex = edges.firstIndex(where: { edge.toIndex == $0.fromIndex }) {
             edge = edges[nextEdgeIndex]
-            cycle.append(edge)
+            cycle += 1
             edges.remove(at: nextEdgeIndex)
         }
 
-        cycles.append(cycle)
+        cycleCounts.append(cycle)
     }
 
     // each cycle will require cycle.count - 1 swaps
-    return cycles.reduce(0) { (sum, cycle) in sum + cycle.count - 1 }
+    return cycleCounts.reduce(0) { (sum, cycleCount) in sum + cycleCount - 1 }
 }
