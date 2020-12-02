@@ -17,8 +17,7 @@ func minimumSwaps(arr: [Int]) -> Int {
     // We will create a graph in an association list connecting indices that should be swapped
     var edges = [Edge]()
     for i in 0..<arr.count {
-        let fromIndex = arr.firstIndex { $0 == i + 1 }
-        edges.append(Edge(fromIndex: fromIndex!, toIndex: i))
+        edges.append(Edge(fromIndex: i, toIndex: arr[i] - 1))
     }
     // Remove cycles from an index to itself; not necessary for correctness
     edges.removeAll { $0.fromIndex == $0.toIndex }

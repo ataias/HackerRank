@@ -24,8 +24,8 @@ final class ArrayTests: XCTestCase {
     func testMinimumSwapsHugeInput() {
         let expected = 50000
 
-        let input14 = Array(1...100000)
-        let actual = minimumSwaps(arr: input14)
+        let input14 = Array(1...100000).reversed()
+        let actual = minimumSwaps(arr: Array(input14))
 
         XCTAssertEqual(expected, actual)
     }
