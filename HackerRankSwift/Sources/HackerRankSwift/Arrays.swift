@@ -8,30 +8,35 @@ func rotLeft(a: [Int], d: Int) -> [Int] {
 /// Find the minimum number of swaps in an array that contains n elements from 1 to n without repetitions. [Problem definition on HackerRank](https://www.hackerrank.com/challenges/minimum-swaps-2/problem)
 func minimumSwaps(arr: [Int]) -> Int {
 
-    // An edge in a graph
     struct Element {
         let value: Int
         var processed: Bool = false
     }
 
-    // We will create a graph in an association list connecting indices that should be swapped
     var count = 0
-    var newArray = arr.map { Element(value: $0) }
+    var arr = arr.map { Element(value: $0) }
 
-    for currentIndex in 0..<newArray.count {
-        if newArray[currentIndex].processed {
+    // We have a graph and each element has a cycle, either just from itselt to itself or going through other elements
+    for i in 0..<arr.count {
+        // here we are starting to track a cycle
+        // i is the first element in the cycle, unless it was already processed in another cycle
+        if arr[i].processed {
             continue
         }
-        
-        var nextIndex = newArray[currentIndex].value - 1
 
-        newArray[currentIndex].processed = true
-        newArray[nextIndex].processed = true
+        // we know the elements are in sequence and so we know their final index
+        // we find out the correct index for the current value
+        var nextIndex = arr[i].value - 1
 
-        while currentIndex != nextIndex {
+        // we mark both as processed in this cycle
+        arr[i].processed = true
+        arr[nextIndex].processed = true
+
+        // now we follow the index until we arrive at the initial element
+        while i != nextIndex {
             count += 1
-            nextIndex = newArray[nextIndex].value - 1
-            newArray[nextIndex].processed = true
+            nextIndex = arr[nextIndex].value - 1
+            arr[nextIndex].processed = true
         }
     }
 
