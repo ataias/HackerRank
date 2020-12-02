@@ -1,0 +1,28 @@
+{
+  "configurations" : [
+    {
+      "id" : "923485AA-3C36-414F-9F02-0DBB09B2C6C7",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "defaultTestExecutionTimeAllowance" : 60,
+    "maximumTestExecutionTimeAllowance" : 60,
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:HackerRankSwift.xcodeproj",
+        "identifier" : "HackerRankSwift::HackerRankSwiftTests",
+        "name" : "HackerRankSwiftTests"
+      }
+    }
+  ],
+  "version" : 1
+}
