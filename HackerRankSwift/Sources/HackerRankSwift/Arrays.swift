@@ -9,35 +9,31 @@ func rotLeft(a: [Int], d: Int) -> [Int] {
 func minimumSwaps(arr: [Int]) -> Int {
 
     // An edge in a graph
-    struct Edge {
-        let fromIndex: Int
-        let toIndex: Int
+    struct Element {
+        let value: Int
+        var processed: Bool = false
     }
 
     // We will create a graph in an association list connecting indices that should be swapped
-    var edges = [Edge]()
-    for i in 0..<arr.count {
-        edges.append(Edge(fromIndex: i, toIndex: arr[i] - 1))
-    }
-    // Remove cycles from an index to itself; not necessary for correctness
-    edges.removeAll { $0.fromIndex == $0.toIndex }
+    var count = 0
+    var newArray = arr.map { Element(value: $0) }
 
-    // We assume there are cycles in the solution; we need to find them
-    var cycleCounts: [Int] = []
-    while edges.count > 0 {
-        var cycle = 0
-        var edge = edges.popLast()!
-        cycle += 1
-
-        while let nextEdgeIndex = edges.firstIndex(where: { edge.toIndex == $0.fromIndex }) {
-            edge = edges[nextEdgeIndex]
-            cycle += 1
-            edges.remove(at: nextEdgeIndex)
+    for currentIndex in 0..<newArray.count {
+        if newArray[currentIndex].processed {
+            continue
         }
+        
+        var nextIndex = newArray[currentIndex].value - 1
 
-        cycleCounts.append(cycle)
+        newArray[currentIndex].processed = true
+        newArray[nextIndex].processed = true
+
+        while currentIndex != nextIndex {
+            count += 1
+            nextIndex = newArray[nextIndex].value - 1
+            newArray[nextIndex].processed = true
+        }
     }
 
-    // each cycle will require cycle.count - 1 swaps
-    return cycleCounts.reduce(0) { (sum, cycleCount) in sum + cycleCount - 1 }
+    return count
 }
